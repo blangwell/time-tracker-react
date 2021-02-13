@@ -3,13 +3,13 @@ import './App.css';
 import TimeTracker from './TimeTracker';
 
 function App() {
+  const [displayElapsed, setDisplayElapsed] = useState('');
   const [displayStart, setDisplayStart] = useState('');
   const [displayStop, setDisplayStop] = useState('');
-  const [displayElapsed, setDisplayElapsed] = useState('');
-  const [startTime, setStartTime] = useState(null);
-  const [stopTime, setStopTime] = useState(null);
   const [elapsed, setElapsed] = useState(null);
   const [running, setRunning] = useState(false);
+  const [startTime, setStartTime] = useState(null);
+  const [stopTime, setStopTime] = useState(null);
 
   const getDateTime = (startStop) => {
     let dateTime = Intl.DateTimeFormat('en', {
