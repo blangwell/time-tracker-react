@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import Start from './Start';
-import Stop from './Stop';
 import TimeTracker from './TimeTracker';
 
 function App() {
@@ -11,6 +9,7 @@ function App() {
   const [startTime, setStartTime] = useState(null);
   const [stopTime, setStopTime] = useState(null);
   const [elapsed, setElapsed] = useState(null);
+  const [running, setRunning] = useState(false);
 
   const getDateTime = (startStop) => {
     let dateTime = Intl.DateTimeFormat('en', {
@@ -20,19 +19,27 @@ function App() {
     }).format(Date.now());
 
     if (startStop === 'start') {
+      setRunning(true);
       setStartTime(Date.now());
       setDisplayStart(dateTime);
+      if (stopTime !== null) {
+        setDisplayElapsed(null);
+        setDisplayStop(null);
+        setElapsed(null);
+        setStopTime(null);
+      }
     } else if (startStop === 'stop') {
+      setRunning(false);
       setStopTime(Date.now());
       setDisplayStop(dateTime)
     }
-  }
+  };
   
   useEffect(() => {
     if (stopTime) {
       setElapsed((Math.round(stopTime - startTime)));
     }
-  }, [stopTime])
+  }, [startTime, stopTime]);
 
   return (
     <div className="App">
@@ -44,9 +51,10 @@ function App() {
         displayElapsed={displayElapsed}
         setDisplayElapsed={setDisplayElapsed}
         getDateTime={getDateTime}
+        running={running}
       />
     </div>
   );
-}
+};
 
 export default App;
