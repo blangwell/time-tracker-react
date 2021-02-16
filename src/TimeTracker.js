@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import Start from './Start';
 import Stop from './Stop';
 
@@ -14,6 +14,7 @@ export default function TimeTracker(props) {
   
   const start = useMemo(() => <Start getDateTime={props.getDateTime} />, [props.getDateTime])
   const stop = useMemo(() => <Stop getDateTime={props.getDateTime} />, [props.getDateTime])
+  const userMessage = !props.running ? 'Click Start to Begin Tracking' : 'Click Stop to Finish Tracking'
   
   useEffect(() => {
     parseTime();
@@ -21,7 +22,7 @@ export default function TimeTracker(props) {
   
   return (
     <div>
-      <h2>This is the actual tracker</h2>
+      <h2>{userMessage}</h2>
       <div class="display-values">
         <p>Start: <span class="date-time">{props.displayStart}</span></p>
         <p>Stop: <span class="date-time">{props.displayStop}</span></p>
